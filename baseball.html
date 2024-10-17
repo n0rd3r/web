@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Baseball</title>
+        <script>
+
+function formatData(data) {
+    var d = JSON.parse(data);
+    var output = new Date().toLocaleTimeString();
+    output += "<hr/>"
+    var events = d.sports[0].leagues[0].events;
+    for (var i = 0; i < events.length; i++){
+        if (events[i].status == "pre") {
+            output += new Date(events[i].date).toLocaleTimeString() + "</br>";
+            output += events[i].name + "<br/>";
+            output += events[i].odds.details + " O/U: " + events[i].odds.overUnder;
+            output += "<hr/>";
+        } else {
+            c = events[i].competitors;
+            for (x = 0; x < c.length;x++){
+                output += c[x].abbreviation + ": " + c[x].score;
+                if (x == 0) output += " | ";
+            }
+            output += "<br/>";
+            output += events[i].summary + " | ";
+            output += events[i].outsText + " | ";
+            output += events[i].baseRunnersText + "<br/>";
+            output += events[i].odds.details + " O/U: " + events[i].odds.overUnder + "<br/>";
+            output += "<hr/>";
+        }
+    }
+    output += "</br>"
+
+    document.getElementById("content").innerHTML = output;
+}
+
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+      formatData(this.responseText);
+    }
+  xhttp.open("GET", "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=baseball&league=mlb", true);
+  xhttp.send();
+}
+setInterval(loadDoc, 10000);
+        </script>
+    </head>
+    <body>
+        <div id="content" style="font-size:4vw;font-family:monospace"/>
+    </body>
+</html>
