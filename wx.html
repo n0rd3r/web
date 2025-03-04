@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>wx</title>
+    <script>
+        var countdown;
+
+        function get_time() {
+            let d = new Date();
+            return d.getHours().toString().padStart(2, '0') + ":" +
+                d.getMinutes().toString().padStart(2, '0');
+        }
+
+        function formatWx(data) {
+            
+            document.title = data.currentobservation.Temp + "F";
+            const wxobs = "<pre>" + get_time() + "\n" + 
+                          " DATE | " + data.currentobservation.Date + "\n" +
+                          " TEMP | " + data.currentobservation.Temp + "F\n" +
+                          " WCHL | " + data.currentobservation.WindChill + "F\n" +
+                          " DEW  | " + data.currentobservation.Dewp + "F\n" +
+                          " WIND | " + data.currentobservation.Winds + "MPH at " + data.currentobservation.Windd + " Gusting to " + data.currentobservation.Gust + "\n" +
+                          " Wx   | " + data.currentobservation.Weather + "\n" +
+                          " SLP  | " + data.currentobservation.SLP;
+            document.getElementById('content').innerHTML = wxobs;
+        }
+
+        async function getWx() {
+            const url = "https://forecast.weather.gov/MapClick.php?site=iln&map_x=233&map_y=85&FcstType=json";
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                formatWx(json);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        function wx() {
+            getWx();
+            countdown = setInterval(() => {
+                let d = new Date()
+                document.title = getWx();
+            }, 600000);
+        }
+
+        window.onload = function () {
+            wx()
+        };
+    </script>
+</head>
+
+<body>
+    <div style="font-size:24px;font-family:monospace;" id="content"></div>
+</body>
+
+</html>
