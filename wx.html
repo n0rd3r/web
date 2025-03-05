@@ -20,7 +20,7 @@
                           " WCHL | " + data.currentobservation.WindChill + "F\n" +
                           " DEW  | " + data.currentobservation.Dewp + "F\n" +
                           " WIND | " + data.currentobservation.Winds + "MPH at " + data.currentobservation.Windd + " Gusting to " + data.currentobservation.Gust + "\n" +
-                          " Wx   | " + data.currentobservation.Weather + "\n" +
+                          " Wx   | " + data.currentobservation.Weather.trim() + "\n" +
                           " SLP  | " + data.currentobservation.SLP;
             document.getElementById('content').innerHTML = wxobs;
         }
