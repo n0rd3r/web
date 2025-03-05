@@ -36,7 +36,7 @@
             function timer(value) {
                 play_gong();
                 let d = new Date()
-                document.getElementById('status').innerHTML = value + " minute timer started at " + format_time(d);
+                document.getElementById('status').innerHTML += value + " minute timer started at " + format_time(d) + "<br/>";
                 
                 clearInterval(timer_countdown);
                 timer_value = value;
@@ -73,11 +73,11 @@
         <div id="timer"></div><br/>
         <div id="status"></div><br/>
         <button onclick="clock()">Clock</button>
-        <button onclick="timer(25)">Pomodoro</button>
+        <button onclick="timer(25)">25</button>
         <button onclick="timer(15)">15</button>
         <button onclick="timer(10)">10</button>
         <button onclick="timer(5)">5</button>
-        <button onclick="timer(1)">1T</button>
+        <button onclick="timer(1)">1</button>
 
         <audio id="gong" src="zen.mp3" preload="auto"></audio>
 
