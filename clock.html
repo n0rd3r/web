@@ -36,12 +36,11 @@
             function timer(value) {
                 play_gong();
                 let d = new Date()
-                document.getElementById('status').innerHTML += value + " minute timer started at " + format_time(d) + "<br/>";
+                document.getElementById('status').innerHTML = value + " minute timer started at " + format_time(d) + "<br/>" + document.getElementById('status').innerHTML;
                 
                 clearInterval(timer_countdown);
                 timer_value = value;
                 document.title = timer_value;
-                document.getElementById('timer').innerHTML = timer_value;
                 timer_countdown = setInterval(() => {
                     timer_value--;
                     if (timer_value == 0) {
@@ -79,8 +78,7 @@
         <br/>
         <br/>
         <div style="font-size: 24px;font-family:monospace;" id="clock"></div><br/>
-        <div id="timer"></div><br/>
-        <div id="status"></div><br/>
+        <div style="font-size: 20px;font-family:monospace;" id="status"></div><br/>
         <audio id="gong" src="zen.mp3" preload="auto"></audio>
     </body>
 </html>
