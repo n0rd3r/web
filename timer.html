@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Clock</title>
+        <script>
+            let clock_countdown;
+            let timer_countdown;
+            let timer_value;
+            function format_time(d) {
+                return d.getHours().toString().padStart(2, '0') + ":" + 
+                       d.getMinutes().toString().padStart(2, '0') + ":" + 
+                       d.getSeconds().toString().padStart(2, '0');
+            }
+
+            function play_gong() {
+                var audio = document.getElementById('gong');
+                audio.pause();
+                audio.currentTime = 0;
+                audio.play();
+            }
+
+
+            function timer(value) {
+                play_gong();
+                let d = new Date()
+                document.getElementById('status').innerHTML = value + " minute timer started at " + format_time(d) + "<br/>" + document.getElementById('status').innerHTML;
+                
+                //clearInterval(timer_countdown);
+                timer_value = value;
+                document.title = timer_value;
+                timer_countdown = setInterval(() => {
+                    timer_value--;
+                    if (timer_value == 0) {
+                        let d = new Date()
+                        new Notification(value + " minute timer done. " + format_time(d));
+                        play_gong()
+                        //clearInterval(timer_countdown);
+                    }
+                    document.title = timer_value;
+                    document.getElementById('timer').innerHTML = timer_value;
+                }, 60000);
+            }
+
+            if (Notification.permission == "denied") {
+                // Ask the user for permission
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        new Notification("Hello! This is your desktop notification.");
+                    }
+                });
+            } 
+        </script>
+    </head>
+
+   <body>
+        <button onclick="timer(3)">3</button>
+        <div style="font-size: 20px;font-family:monospace;" id="status"></div><br/>
+        <audio id="gong" src="zen.mp3" preload="auto"></audio>
+    </body>
+</html>
