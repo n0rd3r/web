@@ -19,6 +19,9 @@
             }
 
             function stop() {
+                let d = new Date()
+                play_gong()
+                document.getElementById('status').innerHTML = "Timer stopped " + format_time(d) + "<br/>" + document.getElementById('status').innerHTML;
                 clearInterval(timer_countdown);
             }
             
@@ -57,7 +60,8 @@
     </head>
 
    <body>
-        <button onclick="timer(3)">START</button><button onclick="stop()">STOP</button>
+        <button style="width: 200px; height: 60px;" onclick="timer(3)">START</button>
+        <button style="width: 200px; height: 60px;" onclick="stop()">STOP</button>
         <div style="font-size: 20px;font-family:monospace;" id="status"></div><br/>
         <audio id="gong" src="zen.mp3" preload="auto"></audio>
     </body>
