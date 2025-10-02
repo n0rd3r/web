@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Clock</title>
+        <title>Timer</title>
         <script>
             let clock_countdown;
             let timer_countdown;
@@ -18,7 +18,10 @@
                 audio.play();
             }
 
-
+            function stop() {
+                clearInterval(timer_countdown);
+            }
+            
             function timer(value) {
                 play_gong();
                 let d = new Date()
@@ -33,7 +36,9 @@
                         let d = new Date()
                         new Notification(value + " minute timer done. " + format_time(d));
                         play_gong()
-                        //clearInterval(timer_countdown);
+                        document.getElementById('status').innerHTML = value + " minute timer started at " + format_time(d) + "<br/>" + document.getElementById('status').innerHTML;
+                        timer_value = value;
+                        document.title = timer_value;
                     }
                     document.title = timer_value;
                     document.getElementById('timer').innerHTML = timer_value;
@@ -52,7 +57,7 @@
     </head>
 
    <body>
-        <button onclick="timer(3)">3</button>
+        <button onclick="timer(3)">START</button><button onclick="stop()">STOP</button>
         <div style="font-size: 20px;font-family:monospace;" id="status"></div><br/>
         <audio id="gong" src="zen.mp3" preload="auto"></audio>
     </body>
